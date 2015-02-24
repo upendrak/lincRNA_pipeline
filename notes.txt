@@ -1,0 +1,14 @@
+# EBS
+
+/mydata/Upendra/lincRNA
+
+# Copy the topHat output file
+
+iget -P -V -N 2 -T -X checkpoint /iplant/home/shared/ucd.plantbio/maloof.lab/members/upendra/Denovo_stuff/tophat_R500_only_genome_v2/tophat_10_lanes/tophat_genome_v2_R500_10_lanes_out/accepted_hits.bam
+
+# Download cufflinks now
+
+[upendra_35@vm64-15 local]$ cp -r cufflinks-2.0.2.Linux_x86_64 /mydata/Upendra/lincRNA/
+
+# Run cufflinks
+
