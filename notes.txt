@@ -6,9 +6,19 @@
 
 iget -P -V -N 2 -T -X checkpoint /iplant/home/shared/ucd.plantbio/maloof.lab/members/upendra/Denovo_stuff/tophat_R500_only_genome_v2/tophat_10_lanes/tophat_genome_v2_R500_10_lanes_out/accepted_hits.bam
 
-# Download cufflinks now
+# Copy cufflinks now
 
-[upendra_35@vm64-15 local]$ cp -r cufflinks-2.0.2.Linux_x86_64 /mydata/Upendra/lincRNA/
+cp -r cufflinks-2.0.2.Linux_x86_64 /mydata/Upendra/lincRNA/
+
+# Copy gff file and modify it
+
+cp ~/upendra_shared/Chr_ref_index/Brapa_gene_v1.2.gff .
+
+grep -v "mRNA" Brapa_gene_v1.2.gff > temp && mv temp Brapa_gene_v1.2.gff 
 
 # Run cufflinks
+
+cufflinks-2.0.2.Linux_x86_64/cufflinks -g Brapa_gene_v1.2.gff -o cufflinks_out accepted_hits.bam
+
+
 
