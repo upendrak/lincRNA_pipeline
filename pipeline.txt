@@ -1,0 +1,7 @@
+1. Run cufflinks to generate gtf file from TopHat output file
+2. .gtf -> .fasta (only for "u"; sequence must be in proper 5'-3' orientation)
+2. filter .fasta for size, keeping sequences longer than 200 nt
+3. filter .fasta for coding potential in a strand specific way (5'-3'). Remove any sequences that can code for a 100aa protein.
+4. filter .fasta for similarity to known transposable elements. This step would entail removing anything that has a certain BLAST e-value score against a TE database. More on this later.
+5. similar filter for microRNAs.
+6. there may be a couple more user-specified filters, but steps 1-5 should be good for now.
