@@ -16,9 +16,8 @@ cp ~/upendra_shared/Chr_ref_index/Brapa_gene_v1.2.gff .
 
 grep -v "mRNA" Brapa_gene_v1.2.gff > temp && mv temp Brapa_gene_v1.2.gff 
 
-# Run cufflinks
 
-cufflinks-2.0.2.Linux_x86_64/cufflinks -g Brapa_gene_v1.2.gff -o cufflinks_out accepted_hits.bam
+
 
 
 
