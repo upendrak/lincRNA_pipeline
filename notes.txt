@@ -2,22 +2,26 @@
 
 /mydata/Upendra/lincRNA
 
-# Copy the topHat output file
+# Start with cuffcompare output file
 
-iget -P -V -N 2 -T -X checkpoint /iplant/home/shared/ucd.plantbio/maloof.lab/members/upendra/Denovo_stuff/tophat_R500_only_genome_v2/tophat_10_lanes/tophat_genome_v2_R500_10_lanes_out/accepted_hits.bam
+# Download Transdecoder
 
-# Copy cufflinks now
+wget https://github.com/TransDecoder/TransDecoder/archive/2.0.1.tar.gz
 
-cp -r cufflinks-2.0.2.Linux_x86_64 /mydata/Upendra/lincRNA/
+cd 2.0.1
 
-# Copy gff file and modify it
+tar xvf 2.0.1
 
-cp ~/upendra_shared/Chr_ref_index/Brapa_gene_v1.2.gff .
+grep '"u"' cuffcompare_out_annot_no_annot.combined.gtf | gffread -w transcripts_u.fa -g /mydata/db/Brapa_sequence_v1.2.fa - && python2.7 get_gene_length_filter.py transcripts_u.fa transcripts_u_filter.fa && TransDecoder-2.0.1/TransDecoder.LongOrfs -t transcripts_u_filter.fa
 
-grep -v "mRNA" Brapa_gene_v1.2.gff > temp && mv temp Brapa_gene_v1.2.gff 
+sed 's/ .*//' transcripts_u_filter.fa | grep ">" | sed 's/>//' > transcripts_u_filter.fa.genes
 
+cd transcripts_u_filter.fa.transdecoder_dir/
 
+sed 's/|.*//' longest_orfs.cds | grep ">" | sed 's/>//' | uniq > longest_orfs.cds.genes
 
+grep -v -f longest_orfs.cds.genes ../transcripts_u_filter.fa.genes > longest_orfs.cds.genes.not.genes 
 
+sed 's/^/>/' longest_orfs.cds.genes.not.genes > temp && mv temp longest_orfs.cds.genes.not.genes
 
-
+python2.7 ../extract_sequences.py longest_orfs.cds.genes.not.genes ../transcripts_u_filter.fa longest_orfs.cds.genes.not.genes.fa
