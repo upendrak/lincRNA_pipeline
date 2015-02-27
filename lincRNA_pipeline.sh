@@ -18,7 +18,7 @@ makeblastdb -in $3 -dbtype nucl -out $3.blast.out
 
 grep '"u"' $1 | \
 gffread -w transcripts_u.fa -g $2 - && \
-python2.7 get_gene_length_filter.py transcripts_u.fa transcripts_u_filter.fa && \
+python get_gene_length_filter.py transcripts_u.fa transcripts_u_filter.fa && \
 TransDecoder-2.0.1/TransDecoder.LongOrfs -t transcripts_u_filter.fa
 
 sed 's/ .*//' transcripts_u_filter.fa | sed -ne 's/>//p' \
