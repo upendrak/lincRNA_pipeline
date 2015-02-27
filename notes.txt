@@ -4,12 +4,11 @@
 
 # Start with cuffcompare output file
 
+# cuffcompare_out_annot_no_annot.combined.gtf
+
 # Download Transdecoder
 
 wget https://github.com/TransDecoder/TransDecoder/archive/2.0.1.tar.gz
-
-cd 2.0.1
-
 tar xvf 2.0.1
 
 grep '"u"' cuffcompare_out_annot_no_annot.combined.gtf | gffread -w transcripts_u.fa -g /mydata/db/Brapa_sequence_v1.2.fa - && python2.7 get_gene_length_filter.py transcripts_u.fa transcripts_u_filter.fa && TransDecoder-2.0.1/TransDecoder.LongOrfs -t transcripts_u_filter.fa
@@ -25,3 +24,23 @@ grep -v -f longest_orfs.cds.genes ../transcripts_u_filter.fa.genes > longest_orf
 sed 's/^/>/' longest_orfs.cds.genes.not.genes > temp && mv temp longest_orfs.cds.genes.not.genes
 
 python2.7 ../extract_sequences.py longest_orfs.cds.genes.not.genes ../transcripts_u_filter.fa longest_orfs.cds.genes.not.genes.fa
+
+# Move the fasta file that contains the TE & RNA's and format it
+
+makeblastdb -in TE_RNA_transcripts.fa -dbtype nucl -out TE_RNA_transcripts.fa.blast.out
+
+blastn -query longest_orfs.cds.genes.not.genes.fa -db ../TE_RNA_transcripts.fa.blast.out -out longest_orfs.cds.genes.not.genes.fa.blast.out -outfmt 6
+
+# filtering the blastoutput to remove transcripts
+
+python ../filter_sequences.py longest_orfs.cds.genes.not.genes.fa.blast.out longest_orfs.cds.genes.not.genes.fa.blast.out.filtered
+
+# Now remove the genes from the filtered blastout file in the longest_orfs.cds.genes.not.genes.fa
+
+grep -v -f longest_orfs.cds.genes.not.genes.fa.blast.out.filtered longest_orfs.cds.genes.not.genes.fa > lincRNA_final.fa
+
+
+
+
+
+
