@@ -9,6 +9,7 @@ while getopts ":b:c:hr:" opt; do
       ;;
     h)
       echo "USAGE : test.sh -c cuffcompare_output -r reference_genome -b blast_file"
+      exit 1
       ;;
     r)
       referencegenome=$OPTARG
