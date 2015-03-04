@@ -1,2 +1,2 @@
-# lincRNA_pipeline
-Pipeline for lincRNA starting from TopHat output to final lincRNA detection
+### lincRNA_pipeline
+This pipeline generates long non-coding RNA from TopHat-Cufflinks-Cuffcompare output 
