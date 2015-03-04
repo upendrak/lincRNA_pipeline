@@ -7,8 +7,10 @@ while getopts ":b:c:hr:" opt; do
     c)
       comparefile=$OPTARG
       ;;
-    h)
-      echo "USAGE : test.sh -c cuffcompare_output -r reference_genome -b blast_file"
+    h)	echo 	"USAGE : sh lincRNA_pipeline.sh 
+		          -c 	</path/to/cuffcompare_output file>
+	 		  -r 	</path/to/reference_genome file>
+			  -b 	</path/to/blast_file>"
       exit 1
       ;;
     r)
@@ -61,3 +63,5 @@ cap3 lincRNA_final.fa
 
 cat lincRNA_final.fa.cap.singlets lincRNA_final.fa.cap.contigs \
   > lincRNA_final_merged.fa
+
+python ../fasta_header_rename.py lincRNA_final_merged.fa lincRNA_final_merged_renamed.fa
