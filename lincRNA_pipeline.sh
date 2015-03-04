@@ -55,3 +55,8 @@ python ../filter_sequences.py longest_orfs.cds.genes.not.genes.fa.blast.out long
 
 grep -v -f longest_orfs.cds.genes.not.genes.fa.blast.out.filtered longest_orfs.cds.genes.not.genes.fa \
 	> lincRNA_final.fa
+
+cap3 lincRNA_final.fa
+
+cat lincRNA_final.fa.cap.singlets lincRNA_final.fa.cap.contigs \
+  > lincRNA_final_merged.fa
